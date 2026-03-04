@@ -1,4 +1,15 @@
-HELP.md
+### Markdown ###
+*.md
+!README.md
+!HELP.md
+
+### Docs ###
+docs/
+
+### Local Config ###
+application-local.yaml
+application-local.yml
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
