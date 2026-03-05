@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.study.springcqrs.board.writing.mapper.query.WritingQueryMapper">
+<mapper namespace="kr.or.study.springcqrs.board.post.mapper.query.PostQueryMapper">
 
     <select id="selectPostList"
-            parameterType="kr.or.study.springcqrs.board.writing.dto.query.condition.WritingSearch"
-            resultType="kr.or.study.springcqrs.board.writing.dto.query.response.WritingResponse">
+            parameterType="kr.or.study.springcqrs.board.post.dto.query.condition.PostSearch"
+            resultType="kr.or.study.springcqrs.board.post.dto.query.response.PostResponse">
         SELECT
             post_id,
             board_id,

@@ -1,9 +1,9 @@
-package kr.or.study.springcqrs.board.writing.dto.query.response;
+package kr.or.study.springcqrs.board.post.dto.query.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-public record WritingResponse(
+public record PostResponse(
 
         @Schema(description = "게시글 ID", example = "1")
         Long postId,

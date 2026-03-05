@@ -1,8 +1,8 @@
-package kr.or.study.springcqrs.board.writing.dto.query.condition;
+package kr.or.study.springcqrs.board.post.dto.query.condition;
 
 import kr.or.study.springcqrs.common.enums.SortOrder;
 
-public record WritingSearch(
+public record PostSearch(
         String boardId,
         int offset,
         int limit,

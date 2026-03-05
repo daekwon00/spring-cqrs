@@ -1,12 +1,12 @@
-package kr.or.study.springcqrs.board.writing.dto.web;
+package kr.or.study.springcqrs.board.post.dto.web;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import kr.or.study.springcqrs.board.writing.dto.query.condition.WritingSearch;
+import kr.or.study.springcqrs.board.post.dto.query.condition.PostSearch;
 import kr.or.study.springcqrs.common.enums.SortOrder;
 
 @Schema(description = "게시글 목록 조회 요청")
-public record WritingWebRequest(
+public record PostWebRequest(
 
         @Schema(description = "게시판 ID", example = "NOTICE")
         @NotBlank
@@ -23,7 +23,7 @@ public record WritingWebRequest(
 
 ) {
 
-    public WritingWebRequest {
+    public PostWebRequest {
         if (page == null) {
             page = 1;
         }
@@ -35,10 +35,10 @@ public record WritingWebRequest(
         }
     }
 
-    public WritingSearch toSearch() {
-        return new WritingSearch(
+    public PostSearch toSearch() {
+        return new PostSearch(
                 this.boardId,
-                (this.page -1) * this.pageSize,
+                (this.page - 1) * this.pageSize,
                 this.pageSize,
                 this.sortOrder
         );
