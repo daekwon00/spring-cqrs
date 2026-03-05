@@ -20,7 +20,7 @@
             modified_date
         FROM tb_post
         WHERE board_id = #{boardId}
-        ORDER BY created_date #{sortOrder}
+        ORDER BY created_date ${sortOrder}
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
