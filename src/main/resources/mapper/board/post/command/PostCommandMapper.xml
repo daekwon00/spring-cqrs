@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.study.springcqrs.board.post.mapper.command.PostCommandMapper">
+
+    <update id="updateViewCount"
+            parameterType="kr.or.study.springcqrs.board.post.dto.command.request.ViewCountRequest">
+        UPDATE tb_post
+        SET view_count = view_count + 1,
+            modified_date = CURRENT_TIMESTAMP
+        WHERE post_id = #{postId}
+    </update>
+
+</mapper>
