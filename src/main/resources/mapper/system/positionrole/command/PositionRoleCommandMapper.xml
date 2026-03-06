@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.system.positionrole.mapper.command.PositionRoleCommandMapper">
+
+    <delete id="deleteByPositionId">
+        DELETE FROM tb_position_role WHERE position_id = #{positionId}
+    </delete>
+
+    <insert id="insertPositionRole">
+        INSERT INTO tb_position_role (position_id, role_id, created_by)
+        VALUES (#{positionId}, #{roleId}, #{createdBy})
+    </insert>
+
+</mapper>

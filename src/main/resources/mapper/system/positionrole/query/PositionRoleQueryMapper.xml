@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.system.positionrole.mapper.query.PositionRoleQueryMapper">
+
+    <select id="selectAllPositionRoles" resultType="map">
+        SELECT p.position_id, p.position_name, pr.role_id
+        FROM tb_position p
+        LEFT JOIN tb_position_role pr ON p.position_id = pr.position_id
+        WHERE p.use_yn = true
+        ORDER BY p.position_level, pr.role_id
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.system.menu.mapper.query.MenuQueryMapper">
+
+    <select id="selectAllMenus" resultType="map">
+        SELECT menu_id, parent_menu_id, menu_name, menu_url, menu_icon, sort_order, use_yn
+        FROM tb_menu
+        WHERE use_yn = true
+        ORDER BY sort_order
+    </select>
+
+    <select id="selectMenusByRoleIds" resultType="map">
+        SELECT DISTINCT m.menu_id, m.parent_menu_id, m.menu_name, m.menu_url, m.menu_icon, m.sort_order, m.use_yn
+        FROM tb_menu m
+        INNER JOIN tb_role_menu rm ON m.menu_id = rm.menu_id
+        WHERE m.use_yn = true
+          AND rm.role_id IN
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        ORDER BY m.sort_order
+    </select>
+
+    <select id="selectAdminMenus" resultType="map">
+        SELECT menu_id, parent_menu_id, menu_name, menu_url, menu_icon, sort_order, use_yn
+        FROM tb_menu
+        WHERE use_yn = true
+        ORDER BY sort_order
+    </select>
+
+</mapper>
