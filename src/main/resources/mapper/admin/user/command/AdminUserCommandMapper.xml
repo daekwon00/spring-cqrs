@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.admin.user.mapper.command.AdminUserCommandMapper">
+
+    <insert id="insertUser">
+        INSERT INTO tb_user (user_id, user_name, password, email, department)
+        VALUES (#{req.userId}, #{req.userName}, #{req.password}, #{req.email}, #{req.department})
+    </insert>
+
+    <insert id="insertUserRole">
+        INSERT INTO tb_user_role (user_id, role_id)
+        VALUES (#{userId}, #{roleId})
+    </insert>
+
+    <update id="updateUser">
+        UPDATE tb_user
+        SET user_name = #{req.userName},
+            email = #{req.email},
+            department = #{req.department},
+            modified_date = CURRENT_TIMESTAMP
+        WHERE user_id = #{req.userId}
+    </update>
+
+    <delete id="deleteUserRoles">
+        DELETE FROM tb_user_role WHERE user_id = #{userId}
+    </delete>
+
+    <update id="toggleActive">
+        UPDATE tb_user
+        SET is_active = NOT is_active,
+            modified_date = CURRENT_TIMESTAMP
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

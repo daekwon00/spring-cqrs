@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.admin.board.mapper.command.AdminBoardCommandMapper">
+
+    <insert id="insertBoard">
+        INSERT INTO tb_board (board_id, board_name, description, created_by, modified_by)
+        VALUES (#{req.boardId}, #{req.boardName}, #{req.description}, #{req.createdBy}, #{req.createdBy})
+    </insert>
+
+    <update id="updateBoard">
+        UPDATE tb_board
+        SET board_name = #{req.boardName},
+            description = #{req.description},
+            modified_by = #{req.modifiedBy},
+            modified_date = CURRENT_TIMESTAMP
+        WHERE board_id = #{req.boardId}
+    </update>
+
+    <update id="toggleActive">
+        UPDATE tb_board
+        SET use_yn = NOT use_yn,
+            modified_date = CURRENT_TIMESTAMP
+        WHERE board_id = #{boardId}
+    </update>
+
+</mapper>

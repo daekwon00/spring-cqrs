@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.admin.user.mapper.query.AdminUserQueryMapper">
+
+    <sql id="searchCondition">
+        <if test="search != null and search.search != null and search.search != ''">
+            AND (u.user_name LIKE '%' || #{search.search} || '%'
+                 OR u.email LIKE '%' || #{search.search} || '%')
+        </if>
+    </sql>
+
+    <select id="selectUserList" resultType="map">
+        SELECT u.user_id, u.user_name, u.email, u.phone,
+               u.department, u.is_active, u.last_login_date, u.created_date,
+               r.role_id,
+               cc.code_name AS position_name
+        FROM tb_user u
+        LEFT JOIN tb_user_role ur ON u.user_id = ur.user_id
+        LEFT JOIN tb_role r ON ur.role_id = r.role_id
+        LEFT JOIN tb_common_code cc ON u.position_id = cc.code_id AND cc.code_group_id = 'POSITION'
+        WHERE 1=1
+        <include refid="searchCondition"/>
+        ORDER BY u.created_date DESC
+        LIMIT #{search.size} OFFSET #{search.offset}
+    </select>
+
+    <select id="selectUserCount" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_user u
+        WHERE 1=1
+        <include refid="searchCondition"/>
+    </select>
+
+    <select id="selectUserById" resultType="map">
+        SELECT u.user_id, u.user_name, u.email, u.phone,
+               u.department, u.is_active, u.last_login_date, u.created_date,
+               r.role_id,
+               cc.code_name AS position_name
+        FROM tb_user u
+        LEFT JOIN tb_user_role ur ON u.user_id = ur.user_id
+        LEFT JOIN tb_role r ON ur.role_id = r.role_id
+        LEFT JOIN tb_common_code cc ON u.position_id = cc.code_id AND cc.code_group_id = 'POSITION'
+        WHERE u.user_id = #{userId}
+    </select>
+
+</mapper>
