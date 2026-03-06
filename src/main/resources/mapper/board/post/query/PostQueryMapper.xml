@@ -1,27 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.study.springcqrs.board.post.mapper.query.PostQueryMapper">
 
     <select id="selectPostList"
             parameterType="kr.or.study.springcqrs.board.post.dto.query.condition.PostSearch"
-            resultType="kr.or.study.springcqrs.board.post.dto.query.response.PostResponse">
-        SELECT
-            post_id,
-            board_id,
-            title,
-            content,
-            view_count,
-            is_notice,
-            is_secret,
-            created_by,
-            created_date,
-            modified_by,
-            modified_date
-        FROM tb_post
-        WHERE board_id = #{boardId}
-        ORDER BY created_date ${sortOrder}
-        LIMIT #{limit} OFFSET #{offset}
+            resultType="kr.or.study.springcqrs.board.post.dto.query.response.PostListResponse">
+        SELECT p.post_id       AS id,
+               p.board_id      AS "boardId",
+               p.title,
+               u.user_name     AS "authorName",
+               p.view_count    AS "viewCount",
+               p.created_date  AS "createdAt",
+               p.modified_date AS "updatedAt"
+          FROM tb_post p
+          LEFT JOIN tb_user u ON u.user_id = p.created_by
+         WHERE p.board_id = #{boardId}
+        <if test="search != null and search != ''">
+            <choose>
+                <when test="searchType == 'title'">
+                    AND p.title LIKE '%' || #{search} || '%'
+                </when>
+                <when test="searchType == 'author'">
+                    AND u.user_name LIKE '%' || #{search} || '%'
+                </when>
+                <otherwise>
+                    AND (p.title LIKE '%' || #{search} || '%'
+                         OR u.user_name LIKE '%' || #{search} || '%')
+                </otherwise>
+            </choose>
+        </if>
+         ORDER BY p.created_date ${sortOrder}
+         LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="selectPostCount"
+            parameterType="kr.or.study.springcqrs.board.post.dto.query.condition.PostSearch"
+            resultType="long">
+        SELECT COUNT(*)
+          FROM tb_post p
+          LEFT JOIN tb_user u ON u.user_id = p.created_by
+         WHERE p.board_id = #{boardId}
+        <if test="search != null and search != ''">
+            <choose>
+                <when test="searchType == 'title'">
+                    AND p.title LIKE '%' || #{search} || '%'
+                </when>
+                <when test="searchType == 'author'">
+                    AND u.user_name LIKE '%' || #{search} || '%'
+                </when>
+                <otherwise>
+                    AND (p.title LIKE '%' || #{search} || '%'
+                         OR u.user_name LIKE '%' || #{search} || '%')
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <select id="selectPostById" resultType="map">
+        SELECT p.post_id       AS id,
+               p.board_id,
+               p.title,
+               p.content,
+               p.view_count,
+               p.created_by,
+               p.created_date,
+               p.modified_date,
+               u.user_id       AS author_id,
+               u.user_name     AS author_name,
+               u.email         AS author_email
+          FROM tb_post p
+          LEFT JOIN tb_user u ON u.user_id = p.created_by
+         WHERE p.post_id = #{postId}
+    </select>
+
+    <select id="selectPostFiles" resultType="map">
+        SELECT f.file_id           AS id,
+               f.original_filename AS original_name,
+               f.stored_filename   AS stored_name,
+               f.file_size         AS size,
+               f.content_type
+          FROM tb_post_file pf
+          JOIN tb_file f ON f.file_id = pf.file_id
+         WHERE pf.post_id = #{postId}
+    </select>
+
+    <select id="selectRecentPosts" resultType="kr.or.study.springcqrs.board.post.dto.query.response.PostListResponse">
+        SELECT p.post_id       AS id,
+               p.board_id      AS "boardId",
+               p.title,
+               u.user_name     AS "authorName",
+               p.view_count    AS "viewCount",
+               p.created_date  AS "createdAt",
+               p.modified_date AS "updatedAt"
+          FROM tb_post p
+          LEFT JOIN tb_user u ON u.user_id = p.created_by
+         ORDER BY p.created_date DESC
+         LIMIT 5
     </select>
 
 </mapper>

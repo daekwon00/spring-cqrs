@@ -6,6 +6,8 @@ public record PostSearch(
         String boardId,
         int offset,
         int limit,
-        SortOrder sortOrder
+        SortOrder sortOrder,
+        String search,
+        String searchType
 ) {
 }

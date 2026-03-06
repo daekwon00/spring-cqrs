@@ -4,12 +4,38 @@
 
 <mapper namespace="kr.or.study.springcqrs.board.post.mapper.command.PostCommandMapper">
 
-    <update id="updateViewCount"
-            parameterType="kr.or.study.springcqrs.board.post.dto.command.request.ViewCountRequest">
+    <select id="insertPost" resultType="long">
+        INSERT INTO tb_post (board_id, title, content, created_by, modified_by, created_date, modified_date)
+        VALUES (#{boardId}, #{title}, #{content}, #{createdBy}, #{createdBy}, NOW(), NOW())
+        RETURNING post_id
+    </select>
+
+    <update id="updatePost">
         UPDATE tb_post
-        SET view_count = view_count + 1,
-            modified_date = CURRENT_TIMESTAMP
-        WHERE post_id = #{postId}
+           SET title = #{title},
+               content = #{content},
+               modified_by = #{modifiedBy},
+               modified_date = NOW()
+         WHERE post_id = #{postId}
     </update>
+
+    <delete id="deletePost">
+        DELETE FROM tb_post WHERE post_id = #{postId}
+    </delete>
+
+    <update id="updateViewCount">
+        UPDATE tb_post
+           SET view_count = view_count + 1
+         WHERE post_id = #{postId}
+    </update>
+
+    <insert id="insertPostFile">
+        INSERT INTO tb_post_file (post_id, file_id)
+        VALUES (#{postId}, #{fileId})
+    </insert>
+
+    <delete id="deletePostFiles">
+        DELETE FROM tb_post_file WHERE post_id = #{postId}
+    </delete>
 
 </mapper>
