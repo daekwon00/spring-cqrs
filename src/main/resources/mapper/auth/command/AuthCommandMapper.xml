@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.study.springcqrs.auth.mapper.command.AuthCommandMapper">
+
+    <insert id="insertUser">
+        INSERT INTO tb_user (user_id, user_name, password, email, created_date, modified_date)
+        VALUES (#{userId}, #{userName}, #{password}, #{email}, NOW(), NOW())
+    </insert>
+
+    <insert id="insertUserRole">
+        INSERT INTO tb_user_role (user_id, role_id, created_by, created_date)
+        VALUES (#{userId}, #{roleId}, #{userId}, NOW())
+    </insert>
+
+    <update id="updateLastLoginDate">
+        UPDATE tb_user
+           SET last_login_date = NOW()
+         WHERE user_id = #{userId}
+    </update>
+
+    <insert id="insertLoginHistory">
+        INSERT INTO tb_login_history (user_id, login_ip, login_success, login_fail_reason, login_date)
+        VALUES (#{userId}, #{loginIp}, #{loginSuccess}, #{loginFailReason}, NOW())
+    </insert>
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.study.springcqrs.auth.mapper.query.AuthQueryMapper">
+
+    <select id="selectUserById" resultType="map">
+        SELECT user_id,
+               user_name,
+               password,
+               email,
+               phone,
+               department,
+               position_id,
+               is_active,
+               last_login_date,
+               created_date
+          FROM tb_user
+         WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectRolesByUserId" resultType="string">
+        SELECT role_id
+          FROM tb_user_role
+         WHERE user_id = #{userId}
+    </select>
+
+    <select id="existsByUserId" resultType="boolean">
+        SELECT EXISTS(
+            SELECT 1
+              FROM tb_user
+             WHERE user_id = #{userId}
+        )
+    </select>
+
+</mapper>
