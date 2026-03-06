@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.study.springcqrs.dashboard.mapper.query.DashboardQueryMapper">
+
+    <select id="selectTotalPosts" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_post
+    </select>
+
+    <select id="selectTodayPosts" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_post
+        WHERE created_date >= CURRENT_DATE
+    </select>
+
+    <select id="selectTotalUsers" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_user
+        WHERE is_active = true
+    </select>
+
+    <select id="selectMyPosts" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_post
+        WHERE created_by = #{userId}
+    </select>
+
+    <select id="selectChartData" resultType="kr.or.study.springcqrs.dashboard.dto.query.response.ChartDataResponse">
+        SELECT TO_CHAR(d.date, 'FMMM/FMDD') AS date,
+               COALESCE(COUNT(p.post_id), 0) AS count
+        FROM (
+            SELECT CURRENT_DATE - generate_series(0, #{days} - 1) AS date
+        ) d
+        LEFT JOIN tb_post p
+            ON p.created_date >= d.date
+           AND p.created_date &lt; d.date + INTERVAL '1 day'
+        GROUP BY d.date
+        ORDER BY d.date
+    </select>
+
+</mapper>
