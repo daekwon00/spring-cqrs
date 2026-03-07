@@ -80,7 +80,27 @@ SET search_path TO internal;
 ## 환경 설정
 
 - 로컬 DB 설정: `application-local.yaml` (`.gitignore` 처리)
-- AI 기능 사용 시: 환경변수 `AI_API_KEY`에 Anthropic API 키 설정 필요
+
+### AI 프로바이더 설정
+
+3개의 AI 프로바이더를 지원하며, 환경변수로 API 키를 설정합니다:
+
+| 프로바이더 | 환경변수 | 기본 모델 |
+|-----------|----------|-----------|
+| Anthropic (Claude) | `AI_ANTHROPIC_API_KEY` | claude-sonnet-4-20250514 |
+| OpenAI (ChatGPT) | `AI_OPENAI_API_KEY` | gpt-4o |
+| Google (Gemini) | `AI_GEMINI_API_KEY` | gemini-2.0-flash |
+
+기본 프로바이더 변경: `AI_DEFAULT_PROVIDER` 환경변수 (기본값: `anthropic`)
+
+API 요청 시 `provider` 필드로 프로바이더를 선택할 수 있습니다:
+
+```json
+{
+  "provider": "openai",
+  "messages": [{"role": "user", "content": "안녕하세요"}]
+}
+```
 
 ## 참고 문서
 

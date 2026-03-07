@@ -27,8 +27,19 @@ file:
   upload-dir: ${FILE_UPLOAD_DIR:./uploads}
 
 ai:
-  provider: ${AI_PROVIDER:anthropic}
-  api-key: ${AI_API_KEY:not-configured}
-  model: ${AI_MODEL:claude-sonnet-4-20250514}
-  max-tokens: ${AI_MAX_TOKENS:1024}
-  temperature: ${AI_TEMPERATURE:0.7}
+  default-provider: ${AI_DEFAULT_PROVIDER:anthropic}
+  anthropic:
+    api-key: ${AI_ANTHROPIC_API_KEY:not-configured}
+    model: ${AI_ANTHROPIC_MODEL:claude-sonnet-4-20250514}
+    max-tokens: ${AI_ANTHROPIC_MAX_TOKENS:1024}
+    temperature: ${AI_ANTHROPIC_TEMPERATURE:0.7}
+  openai:
+    api-key: ${AI_OPENAI_API_KEY:not-configured}
+    model: ${AI_OPENAI_MODEL:gpt-4o}
+    max-tokens: ${AI_OPENAI_MAX_TOKENS:1024}
+    temperature: ${AI_OPENAI_TEMPERATURE:0.7}
+  gemini:
+    api-key: ${AI_GEMINI_API_KEY:not-configured}
+    model: ${AI_GEMINI_MODEL:gemini-2.0-flash}
+    max-tokens: ${AI_GEMINI_MAX_TOKENS:1024}
+    temperature: ${AI_GEMINI_TEMPERATURE:0.7}

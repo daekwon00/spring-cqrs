@@ -13,7 +13,7 @@ CQRS(Command Query Responsibility Segregation) 패턴 기반의 Spring Boot 백�
 | Auth | JWT (Access + Refresh Token) |
 | API Docs | SpringDoc OpenAPI (Swagger UI) |
 | Build | Gradle |
-| AI | Anthropic Claude API (SSE 스트리밍) |
+| AI | Anthropic Claude / OpenAI ChatGPT / Google Gemini (SSE 스트리밍) |
 
 ## 프로젝트 구조
 
