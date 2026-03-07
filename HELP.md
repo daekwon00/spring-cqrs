@@ -85,13 +85,40 @@ SET search_path TO internal;
 
 3개의 AI 프로바이더를 지원하며, 환경변수로 API 키를 설정합니다:
 
-| 프로바이더 | 환경변수 | 기본 모델 | API 키 발급 |
-|-----------|----------|-----------|------------|
-| Anthropic (Claude) | `AI_ANTHROPIC_API_KEY` | claude-sonnet-4-20250514 | https://console.anthropic.com/settings/keys |
-| OpenAI (ChatGPT) | `AI_OPENAI_API_KEY` | gpt-4o | https://platform.openai.com/api-keys |
-| Google (Gemini) | `AI_GEMINI_API_KEY` | gemini-2.0-flash | https://aistudio.google.com/apikey |
+| 프로바이더 | 환경변수 | 키 형식 | 기본 모델 | API 키 발급 |
+|-----------|----------|---------|-----------|------------|
+| Anthropic (Claude) | `AI_ANTHROPIC_API_KEY` | `sk-ant-api03-...` | claude-sonnet-4-20250514 | https://console.anthropic.com/settings/keys |
+| OpenAI (ChatGPT) | `AI_OPENAI_API_KEY` | `sk-proj-...` | gpt-4o | https://platform.openai.com/api-keys |
+| Google (Gemini) | `AI_GEMINI_API_KEY` | `AIzaSy...` | gemini-2.0-flash | https://aistudio.google.com/apikey |
 
 3개 모두 필수가 아니며, API 키가 설정된 프로바이더만 사용 가능합니다.
+
+#### 키 설정 방법
+
+터미널에서 환경변수로 설정한 뒤 서버를 실행합니다:
+
+```sh
+# 방법 1: export 후 실행
+export AI_ANTHROPIC_API_KEY=sk-ant-api03-xxxx
+export AI_OPENAI_API_KEY=sk-proj-xxxx
+export AI_GEMINI_API_KEY=AIzaSyxxxx
+./gradlew bootRun
+
+# 방법 2: 인라인으로 실행
+AI_ANTHROPIC_API_KEY=sk-ant-api03-xxxx ./gradlew bootRun
+```
+
+또는 `application-local.yaml`에 직접 입력할 수도 있습니다 (gitignore 대상):
+
+```yaml
+ai:
+  anthropic:
+    api-key: sk-ant-api03-xxxx
+  openai:
+    api-key: sk-proj-xxxx
+  gemini:
+    api-key: AIzaSyxxxx
+```
 
 기본 프로바이더 변경: `AI_DEFAULT_PROVIDER` 환경변수 (기본값: `anthropic`)
 
