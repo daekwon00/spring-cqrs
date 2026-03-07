@@ -85,11 +85,13 @@ SET search_path TO internal;
 
 3개의 AI 프로바이더를 지원하며, 환경변수로 API 키를 설정합니다:
 
-| 프로바이더 | 환경변수 | 기본 모델 |
-|-----------|----------|-----------|
-| Anthropic (Claude) | `AI_ANTHROPIC_API_KEY` | claude-sonnet-4-20250514 |
-| OpenAI (ChatGPT) | `AI_OPENAI_API_KEY` | gpt-4o |
-| Google (Gemini) | `AI_GEMINI_API_KEY` | gemini-2.0-flash |
+| 프로바이더 | 환경변수 | 기본 모델 | API 키 발급 |
+|-----------|----------|-----------|------------|
+| Anthropic (Claude) | `AI_ANTHROPIC_API_KEY` | claude-sonnet-4-20250514 | https://console.anthropic.com/settings/keys |
+| OpenAI (ChatGPT) | `AI_OPENAI_API_KEY` | gpt-4o | https://platform.openai.com/api-keys |
+| Google (Gemini) | `AI_GEMINI_API_KEY` | gemini-2.0-flash | https://aistudio.google.com/apikey |
+
+3개 모두 필수가 아니며, API 키가 설정된 프로바이더만 사용 가능합니다.
 
 기본 프로바이더 변경: `AI_DEFAULT_PROVIDER` 환경변수 (기본값: `anthropic`)
 
