@@ -10,7 +10,7 @@ public record LoginWebRequest(
         @NotBlank(message = "아이디를 입력해주세요.")
         String username,
 
-        @Schema(description = "비밀번호", example = "admin1234")
+        @Schema(description = "비밀번호", example = "admin123")
         @NotBlank(message = "비밀번호를 입력해주세요.")
         String password
 ) {
