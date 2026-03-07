@@ -25,3 +25,10 @@ jwt:
 
 file:
   upload-dir: ${FILE_UPLOAD_DIR:./uploads}
+
+ai:
+  provider: ${AI_PROVIDER:anthropic}
+  api-key: ${AI_API_KEY:not-configured}
+  model: ${AI_MODEL:claude-sonnet-4-20250514}
+  max-tokens: ${AI_MAX_TOKENS:1024}
+  temperature: ${AI_TEMPERATURE:0.7}
