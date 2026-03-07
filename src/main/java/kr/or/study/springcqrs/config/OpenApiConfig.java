@@ -17,9 +17,9 @@ public class OpenApiConfig {
 
         return new OpenAPI()
                 .info(new Info()
-                        .title("Spring CQRS Intranet API")
+                        .title("DK Portal API")
                         .version("1.0")
-                        .description("인트라넷 시스템 REST API"))
+                        .description("DK Portal REST API"))
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName, new SecurityScheme()
