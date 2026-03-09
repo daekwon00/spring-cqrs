@@ -64,6 +64,7 @@ public class AuthCommandService {
 
         UserInfoResponse userInfo = new UserInfoResponse(
                 (String) user.get("user_id"),
+                (String) user.get("user_id"),
                 (String) user.get("user_name"),
                 (String) user.get("email"),
                 displayRole
@@ -83,7 +84,7 @@ public class AuthCommandService {
         authCommandMapper.insertUser(command);
         authCommandMapper.insertUserRole(request.username(), "ROLE_MEMBER");
 
-        return new UserInfoResponse(request.username(), request.name(), request.email(), "USER");
+        return new UserInfoResponse(request.username(), request.username(), request.name(), request.email(), "USER");
     }
 
     private void recordLoginHistory(String userId, String loginIp, boolean success, String failReason) {
