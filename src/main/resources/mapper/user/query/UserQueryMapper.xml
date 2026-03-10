@@ -23,4 +23,15 @@
          WHERE u.user_id = #{userId}
     </select>
 
+    <select id="selectLoginHistory" resultType="kr.or.study.springcqrs.user.dto.query.response.LoginHistoryResponse">
+        SELECT login_ip         AS "loginIp",
+               login_success    AS "loginSuccess",
+               login_fail_reason AS "loginFailReason",
+               login_date       AS "loginDate"
+          FROM tb_login_history
+         WHERE user_id = #{userId}
+         ORDER BY login_date DESC
+         LIMIT #{limit}
+    </select>
+
 </mapper>

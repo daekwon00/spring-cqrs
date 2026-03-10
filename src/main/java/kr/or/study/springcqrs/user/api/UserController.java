@@ -3,6 +3,7 @@ package kr.or.study.springcqrs.user.api;
 import kr.or.study.springcqrs.common.dto.response.ApiResponse;
 import kr.or.study.springcqrs.config.security.SecurityUtils;
 import kr.or.study.springcqrs.user.dto.command.request.UpdateProfileRequest;
+import kr.or.study.springcqrs.user.dto.query.response.LoginHistoryResponse;
 import kr.or.study.springcqrs.user.dto.query.response.UserProfileResponse;
 import kr.or.study.springcqrs.user.dto.web.ChangePasswordWebRequest;
 import kr.or.study.springcqrs.user.dto.web.UpdateProfileWebRequest;
@@ -11,6 +12,8 @@ import kr.or.study.springcqrs.user.service.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,5 +49,14 @@ public class UserController implements UserApi {
         String userId = SecurityUtils.getCurrentUserId();
         userCommandService.changePassword(userId, request.currentPassword(), request.newPassword());
         return ApiResponse.ok(null, "비밀번호가 변경되었습니다.");
+    }
+
+    @Override
+    @GetMapping("/me/login-history")
+    public ApiResponse<List<LoginHistoryResponse>> getMyLoginHistory(
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        String userId = SecurityUtils.getCurrentUserId();
+        return ApiResponse.ok(userQueryService.getLoginHistory(userId, size));
     }
 }
