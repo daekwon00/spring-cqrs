@@ -15,6 +15,7 @@
         FROM tb_menu m
         INNER JOIN tb_role_menu rm ON m.menu_id = rm.menu_id
         WHERE m.use_yn = true
+          AND m.menu_url NOT LIKE '/admin%'
           AND rm.role_id IN
         <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
             #{roleId}
@@ -26,6 +27,7 @@
         SELECT menu_id, parent_menu_id, menu_name, menu_url, menu_icon, sort_order, use_yn
         FROM tb_menu
         WHERE use_yn = true
+          AND menu_url LIKE '/admin%'
         ORDER BY sort_order
     </select>
 
