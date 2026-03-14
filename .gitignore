@@ -2,9 +2,9 @@
 *.md
 !README.md
 !HELP.md
-
-### Docs ###
-docs/
+!CLAUDE.md
+!prd.md
+!docs/**/*.md
 
 ### Local Config ###
 application-local.yaml
